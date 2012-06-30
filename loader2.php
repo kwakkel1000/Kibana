@@ -125,6 +125,24 @@ class LogstashLoader {
 
     // Contruct the query
     $query = new stdClass;
+    $query->from = new StdClass();
+    $query->query = new StdClass();
+    $query->query->filtered = new StdClass();
+    $query->query->filtered->query = new StdClass();
+    $query->query->filtered->query->query_string = new StdClass();
+    $query->query->filtered->query->query_string->query = new StdClass();
+    $query->query->filtered->filter = new StdClass();
+    $query->query->filtered->filter->range = new StdClass();
+    $query->query->filtered->filter->range->{'@timestamp'} = new StdClass();
+    $query->facets = new StdClass();
+    $query->facets->histo1 = new StdClass();
+    $query->facets->histo1->date_histogram = new StdClass();
+    $query->facets->histo1->date_histogram->field = new StdClass();
+    $query->sort = new StdClass();
+    $query->sort->{'@timestamp'} = new StdClass();
+    $query->sort->{'@timestamp'}->order = new StdClass();
+
+
     $query->from = $req->offset;
 
     $filter_string = ($this->config['filter_string'] == "")?
@@ -262,6 +280,11 @@ class LogstashLoader {
 
     // build the response
     $return = new stdClass;
+    $return->graph = new StdClass();
+    $return->graph->interval = new StdClass();
+    $return->meta = new StdClass();
+    $return->meta->per_page = new StdClass();
+
 
     //Store original query size to slice with
     $slice = $query->size;
